@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <title>CleanConfirm - Agendamento de Limpeza</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CleanConfirm - Booking Management</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -343,21 +343,21 @@
                 <i class="fas fa-broom"></i>
             </div>
             <div class="app-name">CleanConfirm</div>
-            <div class="app-description">Agendamento e Confirmação de Limpeza</div>
+            <div class="app-description">Professional Cleaning Booking System</div>
         </header>
         
         <div id="login-section" class="card">
-            <h2><i class="fas fa-key"></i> Acessar Agendamento</h2>
-            <p>Digite seu e-mail ou código de agendamento</p>
+            <h2><i class="fas fa-key"></i> Access Your Booking</h2>
+            <p>Enter your email or booking code</p>
             <div class="form-group">
-                <input type="text" id="client-email" placeholder="seu@email.com ou código">
+                <input type="text" id="client-email" placeholder="your@email.com or booking code">
             </div>
             <button class="btn btn-primary" onclick="checkAppointment()">
-                <i class="fas fa-sign-in-alt"></i> Acessar Agendamento
+                <i class="fas fa-sign-in-alt"></i> Access Booking
             </button>
             
             <div style="text-align: center; margin-top: 20px;">
-                <p>Ou escaneie o QR code</p>
+                <p>Or scan the QR code</p>
                 <div style="background: #f0f0f0; padding: 15px; border-radius: 12px; display: inline-block;">
                     <i class="fas fa-qrcode" style="font-size: 80px; color: #4CAF50;"></i>
                 </div>
@@ -366,15 +366,15 @@
         
         <div id="appointment-details" class="hidden">
             <div class="card">
-                <h2><i class="fas fa-calendar-check"></i> Seu Agendamento</h2>
+                <h2><i class="fas fa-calendar-check"></i> Your Booking Details</h2>
                 
                 <div class="appointment-card">
                     <div class="appointment-icon">
                         <i class="fas fa-user"></i>
                     </div>
                     <div class="appointment-info">
-                        <div id="client-name">Maria Silva</div>
-                        <div id="client-address">Rua das Flores, 123</div>
+                        <div id="client-name">Sarah Johnson</div>
+                        <div id="client-address">12 Queen Street, Auckland</div>
                     </div>
                 </div>
                 
@@ -383,46 +383,46 @@
                         <i class="fas fa-clock"></i>
                     </div>
                     <div class="appointment-info">
-                        <div>Data: <span id="current-date">15/10/2023</span></div>
-                        <div>Horário: <span id="current-time">14:00</span></div>
-                        <div>Status: <span id="current-status" class="status-badge status-pending">Pendente</span></div>
+                        <div>Date: <span id="current-date">15/10/2023</span></div>
+                        <div>Time: <span id="current-time">14:00</span></div>
+                        <div>Status: <span id="current-status" class="status-badge status-pending">Pending</span></div>
                     </div>
                 </div>
                 
                 <button class="btn btn-primary" onclick="confirmAppointment()">
-                    <i class="fas fa-check-circle"></i> Confirmar Agendamento
+                    <i class="fas fa-check-circle"></i> Confirm Booking
                 </button>
                 <button class="btn btn-warning" onclick="showReschedule()">
-                    <i class="fas fa-calendar-alt"></i> Reagendar
+                    <i class="fas fa-calendar-alt"></i> Reschedule
                 </button>
                 <button class="btn btn-outline" onclick="showLogin()">
-                    <i class="fas fa-times"></i> Sair
+                    <i class="fas fa-times"></i> Cancel
                 </button>
             </div>
             
             <div class="card">
-                <h3><i class="fas fa-info-circle"></i> Informações Adicionais</h3>
-                <p>Chegue com 15 minutos de antecedência</p>
-                <p>Traga sua própria roupa de cama (opcional)</p>
-                <p>Entre em contato: (11) 99999-9999</p>
+                <h3><i class="fas fa-info-circle"></i> Additional Information</h3>
+                <p>Please be ready 15 minutes before the scheduled time</p>
+                <p>Provide access instructions if you won't be home</p>
+                <p>Contact: +64 9 123 4567</p>
             </div>
         </div>
         
         <div id="reschedule-section" class="card hidden">
-            <h2><i class="fas fa-calendar-plus"></i> Reagendar Serviço</h2>
-            <p>Selecione uma nova data e horário disponível:</p>
+            <h2><i class="fas fa-calendar-plus"></i> Reschedule Your Booking</h2>
+            <p>Select a new available date and time for your cleaning service:</p>
             
-            <h3><i class="fas fa-calendar-day"></i> Selecione a Data</h3>
+            <h3><i class="fas fa-calendar-day"></i> Select Date</h3>
             <div class="swipe-area">
                 <div class="swipe-item">
-                    <div style="text-align: center; font-weight: bold; margin-bottom: 10px;">Outubro 2023</div>
+                    <div style="text-align: center; font-weight: bold; margin-bottom: 10px;">October 2023</div>
                     <div class="calendar">
-                        <div class="weekday">D</div>
                         <div class="weekday">S</div>
+                        <div class="weekday">M</div>
                         <div class="weekday">T</div>
-                        <div class="weekday">Q</div>
-                        <div class="weekday">Q</div>
-                        <div class="weekday">S</div>
+                        <div class="weekday">W</div>
+                        <div class="weekday">T</div>
+                        <div class="weekday">F</div>
                         <div class="weekday">S</div>
                         
                         <div class="calendar-day unavailable">1</div>
@@ -448,18 +448,30 @@
                         <div class="calendar-day available">19</div>
                         <div class="calendar-day unavailable">20</div>
                         <div class="calendar-day unavailable">21</div>
+                        
+                        <div class="calendar-day available">22</div>
+                        <div class="calendar-day available">23</div>
+                        <div class="calendar-day available">24</div>
+                        <div class="calendar-day available">25</div>
+                        <div class="calendar-day available">26</div>
+                        <div class="calendar-day available">27</div>
+                        <div class="calendar-day available">28</div>
+                        
+                        <div class="calendar-day available">29</div>
+                        <div class="calendar-day available">30</div>
+                        <div class="calendar-day available">31</div>
                     </div>
                 </div>
                 
                 <div class="swipe-item">
-                    <div style="text-align: center; font-weight: bold; margin-bottom: 10px;">Novembro 2023</div>
+                    <div style="text-align: center; font-weight: bold; margin-bottom: 10px;">November 2023</div>
                     <div class="calendar">
-                        <div class="weekday">D</div>
                         <div class="weekday">S</div>
+                        <div class="weekday">M</div>
                         <div class="weekday">T</div>
-                        <div class="weekday">Q</div>
-                        <div class="weekday">Q</div>
-                        <div class="weekday">S</div>
+                        <div class="weekday">W</div>
+                        <div class="weekday">T</div>
+                        <div class="weekday">F</div>
                         <div class="weekday">S</div>
                         
                         <div class="calendar-day available">1</div>
@@ -481,7 +493,7 @@
                 </div>
             </div>
             
-            <h3><i class="fas fa-clock"></i> Selecione o Horário</h3>
+            <h3><i class="fas fa-clock"></i> Select Time Slot</h3>
             <div class="time-slots">
                 <div class="time-slot available">08:00</div>
                 <div class="time-slot available">10:00</div>
@@ -492,10 +504,10 @@
             </div>
             
             <button class="btn btn-primary" onclick="confirmReschedule()">
-                <i class="fas fa-calendar-check"></i> Confirmar Reagendamento
+                <i class="fas fa-calendar-check"></i> Confirm Rescheduling
             </button>
             <button class="btn btn-outline" onclick="cancelReschedule()">
-                <i class="fas fa-arrow-left"></i> Voltar
+                <i class="fas fa-arrow-left"></i> Back
             </button>
         </div>
         
@@ -504,7 +516,7 @@
                 <div class="icon-large">
                     <i class="fas fa-check-circle"></i>
                 </div>
-                <h2>Agendamento Confirmado!</h2>
+                <h2>Booking Confirmed!</h2>
             </div>
             
             <div class="appointment-card">
@@ -512,20 +524,20 @@
                     <i class="fas fa-calendar-alt"></i>
                 </div>
                 <div class="appointment-info">
-                    <div>Data: <span id="new-date">15/10/2023</span></div>
-                    <div>Horário: <span id="new-time">14:00</span></div>
-                    <div>Status: <span class="status-badge status-confirmed">Confirmado</span></div>
+                    <div>Date: <span id="new-date">15/10/2023</span></div>
+                    <div>Time: <span id="new-time">14:00</span></div>
+                    <div>Status: <span class="status-badge status-confirmed">Confirmed</span></div>
                 </div>
             </div>
             
-            <p>Você receberá um lembrete por e-mail e SMS 24 horas antes do serviço.</p>
+            <p>You will receive a reminder email and SMS 24 hours before your service.</p>
             
             <button class="btn btn-primary" onclick="showLogin()">
-                <i class="fas fa-home"></i> Voltar ao Início
+                <i class="fas fa-home"></i> Back to Home
             </button>
             
             <div style="text-align: center; margin-top: 20px;">
-                <p>Compartilhar confirmação:</p>
+                <p>Share confirmation:</p>
                 <div style="font-size: 24px;">
                     <i class="fas fa-envelope" style="color: #EA4335; margin: 0 10px;"></i>
                     <i class="fas fa-sms" style="color: #34A853; margin: 0 10px;"></i>
@@ -538,42 +550,42 @@
     <div class="tab-bar">
         <div class="tab-item active">
             <div class="tab-icon"><i class="fas fa-home"></i></div>
-            <div>Início</div>
+            <div>Home</div>
         </div>
         <div class="tab-item">
             <div class="tab-icon"><i class="fas fa-history"></i></div>
-            <div>Histórico</div>
+            <div>History</div>
         </div>
         <div class="tab-item">
             <div class="tab-icon"><i class="fas fa-question-circle"></i></div>
-            <div>Ajuda</div>
+            <div>Help</div>
         </div>
         <div class="tab-item">
             <div class="tab-icon"><i class="fas fa-user"></i></div>
-            <div>Perfil</div>
+            <div>Profile</div>
         </div>
     </div>
 
     <script>
-        // Dados simulados
+        // Demo data
         const appointments = {
-            "cliente@email.com": {
-                name: "Maria Silva",
-                address: "Rua das Flores, 123 - Apt 101",
+            "client@email.com": {
+                name: "Sarah Johnson",
+                address: "12 Queen Street, Auckland",
                 date: "2023-10-15",
                 time: "14:00",
                 status: "pending"
             },
             "123456": {
-                name: "João Santos",
-                address: "Av. Principal, 456",
+                name: "Michael Brown",
+                address: "24 Victoria Road, Wellington",
                 date: "2023-10-16",
                 time: "10:00",
                 status: "confirmed"
             }
         };
         
-        // Horários disponíveis
+        // Available time slots
         const availableTimes = ["08:00", "10:00", "12:00", "14:00", "16:00"];
         
         let selectedDate = null;
@@ -591,33 +603,33 @@
                 document.getElementById('current-time').textContent = currentAppointment.time;
                 
                 const statusElement = document.getElementById('current-status');
-                statusElement.textContent = currentAppointment.status === 'pending' ? 'Pendente' : 'Confirmado';
+                statusElement.textContent = currentAppointment.status === 'pending' ? 'Pending' : 'Confirmed';
                 statusElement.className = 'status-badge ' + (currentAppointment.status === 'pending' ? 'status-pending' : 'status-confirmed');
                 
                 document.getElementById('login-section').classList.add('hidden');
                 document.getElementById('appointment-details').classList.remove('hidden');
             } else {
-                alert("Agendamento não encontrado. Verifique o e-mail ou código informado.");
+                alert("Booking not found. Please check your email or booking code.");
             }
         }
         
         function confirmAppointment() {
-            // Em uma aplicação real, isso atualizaria o banco de dados
+            // In a real app, this would update the database
             currentAppointment.status = 'confirmed';
             const statusElement = document.getElementById('current-status');
-            statusElement.textContent = 'Confirmado';
+            statusElement.textContent = 'Confirmed';
             statusElement.className = 'status-badge status-confirmed';
             
-            // Mostrar confirmação
+            // Show confirmation
             document.getElementById('new-date').textContent = formatDate(currentAppointment.date);
             document.getElementById('new-time').textContent = currentAppointment.time;
             
             document.getElementById('appointment-details').classList.add('hidden');
             document.getElementById('confirmation-section').classList.remove('hidden');
             
-            // Simular envio de notificação
+            // Simulate notification
             setTimeout(() => {
-                alert("📧 E-mail e SMS de confirmação enviados!");
+                alert("📧 Email and SMS confirmation sent!");
             }, 1000);
         }
         
@@ -628,11 +640,11 @@
         
         function confirmReschedule() {
             if (!selectedDate || !selectedTime) {
-                alert("Por favor, selecione uma data e horário.");
+                alert("Please select both a date and time slot.");
                 return;
             }
             
-            // Em uma aplicação real, isso atualizaria o banco de dados
+            // In a real app, this would update the database
             currentAppointment.date = selectedDate;
             currentAppointment.time = selectedTime;
             
@@ -642,9 +654,9 @@
             document.getElementById('reschedule-section').classList.add('hidden');
             document.getElementById('confirmation-section').classList.remove('hidden');
             
-            // Simular envio de notificação
+            // Simulate notification
             setTimeout(() => {
-                alert("📧 E-mail e SMS de confirmação de reagendamento enviados!");
+                alert("📧 Email and SMS rescheduling confirmation sent!");
             }, 1000);
         }
         
@@ -659,7 +671,7 @@
             document.getElementById('appointment-details').classList.add('hidden');
             document.getElementById('login-section').classList.remove('hidden');
             
-            // Limpar campo de entrada
+            // Clear input field
             document.getElementById('client-email').value = "";
         }
         
@@ -668,7 +680,7 @@
             return `${day}/${month}/${year}`;
         }
         
-        // Adicionar interatividade aos elementos de data/horário
+        // Add interactivity to date/time elements
         document.querySelectorAll('.calendar-day.available').forEach(day => {
             day.addEventListener('click', function() {
                 document.querySelectorAll('.calendar-day.selected').forEach(d => {
@@ -689,7 +701,7 @@
             });
         });
         
-        // Simular funcionalidade das abas
+        // Simulate tab functionality
         document.querySelectorAll('.tab-item').forEach(tab => {
             tab.addEventListener('click', function() {
                 document.querySelectorAll('.tab-item').forEach(t => {
