@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>CleanConfirm - Agendamento de Limpeza</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+            padding-bottom: 80px;
+        }
+        
+        .container {
+            max-width: 100%;
+            padding: 16px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+            color: white;
+            padding: 20px 16px;
+            text-align: center;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .logo {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .app-name {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .app-description {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+            padding: 20px;
+            transition: transform 0.3s ease;
+        }
+        
+        .card:active {
+            transform: scale(0.98);
+        }
+        
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 10px 0;
+            text-align: center;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+            color: white;
+        }
+        
+        .btn-primary:active {
+            opacity: 0.9;
+            transform: translateY(2px);
+        }
+        
+        .btn-secondary {
+            background-color: #2196F3;
+            color: white;
+        }
+        
+        .btn-warning {
+            background-color: #FF9800;
+            color: white;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #4CAF50;
+            color: #4CAF50;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 16px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            font-size: 16px;
+            background-color: #f8f9fa;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            margin: 15px 0;
+        }
+        
+        .weekday {
+            text-align: center;
+            font-weight: bold;
+            padding: 12px 0;
+            color: #4CAF50;
+        }
+        
+        .calendar-day {
+            padding: 12px 0;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 50%;
+            aspect-ratio: 1/1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+        }
+        
+        .calendar-day.available {
+            background-color: #E8F5E9;
+            color: #2E7D32;
+        }
+        
+        .calendar-day.unavailable {
+            background-color: #FFEBEE;
+            color: #C62828;
+            cursor: not-allowed;
+        }
+        
+        .calendar-day.selected {
+            background-color: #2196F3;
+            color: white;
+        }
+        
+        .calendar-day.today {
+            border: 2px solid #FF9800;
+        }
+        
+        .time-slots {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin: 15px 0;
+        }
+        
+        .time-slot {
+            padding: 16px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            cursor: pointer;
+            text-align: center;
+            background-color: #f8f9fa;
+        }
+        
+        .time-slot.available {
+            background-color: #E8F5E9;
+            color: #2E7D32;
+            border-color: #4CAF50;
+        }
+        
+        .time-slot.selected {
+            background-color: #2196F3;
+            color: white;
+            border-color: #2196F3;
+        }
+        
+        .time-slot.unavailable {
+            background-color: #FFEBEE;
+            color: #C62828;
+            cursor: not-allowed;
+        }
+        
+        .success-message {
+            background-color: #E8F5E9;
+            color: #2E7D32;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .icon-large {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+        
+        .tab-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 12px;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+        }
+        
+        .tab-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 12px;
+            color: #777;
+        }
+        
+        .tab-item.active {
+            color: #4CAF50;
+        }
+        
+        .tab-icon {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+        
+        .appointment-card {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-radius: 12px;
+            background: #f8f9fa;
+            margin-bottom: 15px;
+        }
+        
+        .appointment-icon {
+            font-size: 24px;
+            margin-right: 15px;
+            color: #4CAF50;
+        }
+        
+        .appointment-info {
+            flex: 1;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .status-pending {
+            background-color: #FFF8E1;
+            color: #FF8F00;
+        }
+        
+        .status-confirmed {
+            background-color: #E8F5E9;
+            color: #2E7D32;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .history-item {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .history-date {
+            font-weight: bold;
+            color: #4CAF50;
+        }
+        
+        .swipe-area {
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 10px 0;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .swipe-item {
+            display: inline-block;
+            width: 80%;
+            margin-right: 15px;
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        @media (min-width: 768px) {
+            .container {
+                max-width: 400px;
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-broom"></i>
+            </div>
+            <div class="app-name">CleanConfirm</div>
+            <div class="app-description">Agendamento e Confirmação de Limpeza</div>
+        </header>
+        
+        <div id="login-section" class="card">
+            <h2><i class="fas fa-key"></i> Acessar Agendamento</h2>
+            <p>Digite seu e-mail ou código de agendamento</p>
+            <div class="form-group">
+                <input type="text" id="client-email" placeholder="seu@email.com ou código">
+            </div>
+            <button class="btn btn-primary" onclick="checkAppointment()">
+                <i class="fas fa-sign-in-alt"></i> Acessar Agendamento
+            </button>
+            
+            <div style="text-align: center; margin-top: 20px;">
+                <p>Ou escaneie o QR code</p>
+                <div style="background: #f0f0f0; padding: 15px; border-radius: 12px; display: inline-block;">
+                    <i class="fas fa-qrcode" style="font-size: 80px; color: #4CAF50;"></i>
+                </div>
+            </div>
+        </div>
+        
+        <div id="appointment-details" class="hidden">
+            <div class="card">
+                <h2><i class="fas fa-calendar-check"></i> Seu Agendamento</h2>
+                
+                <div class="appointment-card">
+                    <div class="appointment-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="appointment-info">
+                        <div id="client-name">Maria Silva</div>
+                        <div id="client-address">Rua das Flores, 123</div>
+                    </div>
+                </div>
+                
+                <div class="appointment-card">
+                    <div class="appointment-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="appointment-info">
+                        <div>Data: <span id="current-date">15/10/2023</span></div>
+                        <div>Horário: <span id="current-time">14:00</span></div>
+                        <div>Status: <span id="current-status" class="status-badge status-pending">Pendente</span></div>
+                    </div>
+                </div>
+                
+                <button class="btn btn-primary" onclick="confirmAppointment()">
+                    <i class="fas fa-check-circle"></i> Confirmar Agendamento
+                </button>
+                <button class="btn btn-warning" onclick="showReschedule()">
+                    <i class="fas fa-calendar-alt"></i> Reagendar
+                </button>
+                <button class="btn btn-outline" onclick="showLogin()">
+                    <i class="fas fa-times"></i> Sair
+                </button>
+            </div>
+            
+            <div class="card">
+                <h3><i class="fas fa-info-circle"></i> Informações Adicionais</h3>
+                <p>Chegue com 15 minutos de antecedência</p>
+                <p>Traga sua própria roupa de cama (opcional)</p>
+                <p>Entre em contato: (11) 99999-9999</p>
+            </div>
+        </div>
+        
+        <div id="reschedule-section" class="card hidden">
+            <h2><i class="fas fa-calendar-plus"></i> Reagendar Serviço</h2>
+            <p>Selecione uma nova data e horário disponível:</p>
+            
+            <h3><i class="fas fa-calendar-day"></i> Selecione a Data</h3>
+            <div class="swipe-area">
+                <div class="swipe-item">
+                    <div style="text-align: center; font-weight: bold; margin-bottom: 10px;">Outubro 2023</div>
+                    <div class="calendar">
+                        <div class="weekday">D</div>
+                        <div class="weekday">S</div>
+                        <div class="weekday">T</div>
+                        <div class="weekday">Q</div>
+                        <div class="weekday">Q</div>
+                        <div class="weekday">S</div>
+                        <div class="weekday">S</div>
+                        
+                        <div class="calendar-day unavailable">1</div>
+                        <div class="calendar-day unavailable">2</div>
+                        <div class="calendar-day unavailable">3</div>
+                        <div class="calendar-day available">4</div>
+                        <div class="calendar-day available">5</div>
+                        <div class="calendar-day available">6</div>
+                        <div class="calendar-day available">7</div>
+                        
+                        <div class="calendar-day available">8</div>
+                        <div class="calendar-day available">9</div>
+                        <div class="calendar-day unavailable">10</div>
+                        <div class="calendar-day unavailable">11</div>
+                        <div class="calendar-day available">12</div>
+                        <div class="calendar-day available">13</div>
+                        <div class="calendar-day available">14</div>
+                        
+                        <div class="calendar-day available">15</div>
+                        <div class="calendar-day available">16</div>
+                        <div class="calendar-day available">17</div>
+                        <div class="calendar-day available">18</div>
+                        <div class="calendar-day available">19</div>
+                        <div class="calendar-day unavailable">20</div>
+                        <div class="calendar-day unavailable">21</div>
+                    </div>
+                </div>
+                
+                <div class="swipe-item">
+                    <div style="text-align: center; font-weight: bold; margin-bottom: 10px;">Novembro 2023</div>
+                    <div class="calendar">
+                        <div class="weekday">D</div>
+                        <div class="weekday">S</div>
+                        <div class="weekday">T</div>
+                        <div class="weekday">Q</div>
+                        <div class="weekday">Q</div>
+                        <div class="weekday">S</div>
+                        <div class="weekday">S</div>
+                        
+                        <div class="calendar-day available">1</div>
+                        <div class="calendar-day available">2</div>
+                        <div class="calendar-day available">3</div>
+                        <div class="calendar-day available">4</div>
+                        <div class="calendar-day available">5</div>
+                        <div class="calendar-day available">6</div>
+                        <div class="calendar-day available">7</div>
+                        
+                        <div class="calendar-day available">8</div>
+                        <div class="calendar-day available">9</div>
+                        <div class="calendar-day available">10</div>
+                        <div class="calendar-day available">11</div>
+                        <div class="calendar-day available">12</div>
+                        <div class="calendar-day available">13</div>
+                        <div class="calendar-day available">14</div>
+                    </div>
+                </div>
+            </div>
+            
+            <h3><i class="fas fa-clock"></i> Selecione o Horário</h3>
+            <div class="time-slots">
+                <div class="time-slot available">08:00</div>
+                <div class="time-slot available">10:00</div>
+                <div class="time-slot unavailable">12:00</div>
+                <div class="time-slot available">14:00</div>
+                <div class="time-slot available">16:00</div>
+                <div class="time-slot unavailable">18:00</div>
+            </div>
+            
+            <button class="btn btn-primary" onclick="confirmReschedule()">
+                <i class="fas fa-calendar-check"></i> Confirmar Reagendamento
+            </button>
+            <button class="btn btn-outline" onclick="cancelReschedule()">
+                <i class="fas fa-arrow-left"></i> Voltar
+            </button>
+        </div>
+        
+        <div id="confirmation-section" class="card hidden">
+            <div class="success-message">
+                <div class="icon-large">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h2>Agendamento Confirmado!</h2>
+            </div>
+            
+            <div class="appointment-card">
+                <div class="appointment-icon">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+                <div class="appointment-info">
+                    <div>Data: <span id="new-date">15/10/2023</span></div>
+                    <div>Horário: <span id="new-time">14:00</span></div>
+                    <div>Status: <span class="status-badge status-confirmed">Confirmado</span></div>
+                </div>
+            </div>
+            
+            <p>Você receberá um lembrete por e-mail e SMS 24 horas antes do serviço.</p>
+            
+            <button class="btn btn-primary" onclick="showLogin()">
+                <i class="fas fa-home"></i> Voltar ao Início
+            </button>
+            
+            <div style="text-align: center; margin-top: 20px;">
+                <p>Compartilhar confirmação:</p>
+                <div style="font-size: 24px;">
+                    <i class="fas fa-envelope" style="color: #EA4335; margin: 0 10px;"></i>
+                    <i class="fas fa-sms" style="color: #34A853; margin: 0 10px;"></i>
+                    <i class="fab fa-whatsapp" style="color: #25D366; margin: 0 10px;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-bar">
+        <div class="tab-item active">
+            <div class="tab-icon"><i class="fas fa-home"></i></div>
+            <div>Início</div>
+        </div>
+        <div class="tab-item">
+            <div class="tab-icon"><i class="fas fa-history"></i></div>
+            <div>Histórico</div>
+        </div>
+        <div class="tab-item">
+            <div class="tab-icon"><i class="fas fa-question-circle"></i></div>
+            <div>Ajuda</div>
+        </div>
+        <div class="tab-item">
+            <div class="tab-icon"><i class="fas fa-user"></i></div>
+            <div>Perfil</div>
+        </div>
+    </div>
+
+    <script>
+        // Dados simulados
+        const appointments = {
+            "cliente@email.com": {
+                name: "Maria Silva",
+                address: "Rua das Flores, 123 - Apt 101",
+                date: "2023-10-15",
+                time: "14:00",
+                status: "pending"
+            },
+            "123456": {
+                name: "João Santos",
+                address: "Av. Principal, 456",
+                date: "2023-10-16",
+                time: "10:00",
+                status: "confirmed"
+            }
+        };
+        
+        // Horários disponíveis
+        const availableTimes = ["08:00", "10:00", "12:00", "14:00", "16:00"];
+        
+        let selectedDate = null;
+        let selectedTime = null;
+        let currentAppointment = null;
+        
+        function checkAppointment() {
+            const email = document.getElementById('client-email').value;
+            
+            if (appointments[email]) {
+                currentAppointment = appointments[email];
+                document.getElementById('client-name').textContent = currentAppointment.name;
+                document.getElementById('client-address').textContent = currentAppointment.address;
+                document.getElementById('current-date').textContent = formatDate(currentAppointment.date);
+                document.getElementById('current-time').textContent = currentAppointment.time;
+                
+                const statusElement = document.getElementById('current-status');
+                statusElement.textContent = currentAppointment.status === 'pending' ? 'Pendente' : 'Confirmado';
+                statusElement.className = 'status-badge ' + (currentAppointment.status === 'pending' ? 'status-pending' : 'status-confirmed');
+                
+                document.getElementById('login-section').classList.add('hidden');
+                document.getElementById('appointment-details').classList.remove('hidden');
+            } else {
+                alert("Agendamento não encontrado. Verifique o e-mail ou código informado.");
+            }
+        }
+        
+        function confirmAppointment() {
+            // Em uma aplicação real, isso atualizaria o banco de dados
+            currentAppointment.status = 'confirmed';
+            const statusElement = document.getElementById('current-status');
+            statusElement.textContent = 'Confirmado';
+            statusElement.className = 'status-badge status-confirmed';
+            
+            // Mostrar confirmação
+            document.getElementById('new-date').textContent = formatDate(currentAppointment.date);
+            document.getElementById('new-time').textContent = currentAppointment.time;
+            
+            document.getElementById('appointment-details').classList.add('hidden');
+            document.getElementById('confirmation-section').classList.remove('hidden');
+            
+            // Simular envio de notificação
+            setTimeout(() => {
+                alert("📧 E-mail e SMS de confirmação enviados!");
+            }, 1000);
+        }
+        
+        function showReschedule() {
+            document.getElementById('appointment-details').classList.add('hidden');
+            document.getElementById('reschedule-section').classList.remove('hidden');
+        }
+        
+        function confirmReschedule() {
+            if (!selectedDate || !selectedTime) {
+                alert("Por favor, selecione uma data e horário.");
+                return;
+            }
+            
+            // Em uma aplicação real, isso atualizaria o banco de dados
+            currentAppointment.date = selectedDate;
+            currentAppointment.time = selectedTime;
+            
+            document.getElementById('new-date').textContent = formatDate(selectedDate);
+            document.getElementById('new-time').textContent = selectedTime;
+            
+            document.getElementById('reschedule-section').classList.add('hidden');
+            document.getElementById('confirmation-section').classList.remove('hidden');
+            
+            // Simular envio de notificação
+            setTimeout(() => {
+                alert("📧 E-mail e SMS de confirmação de reagendamento enviados!");
+            }, 1000);
+        }
+        
+        function cancelReschedule() {
+            document.getElementById('reschedule-section').classList.add('hidden');
+            document.getElementById('appointment-details').classList.remove('hidden');
+        }
+        
+        function showLogin() {
+            document.getElementById('confirmation-section').classList.add('hidden');
+            document.getElementById('reschedule-section').classList.add('hidden');
+            document.getElementById('appointment-details').classList.add('hidden');
+            document.getElementById('login-section').classList.remove('hidden');
+            
+            // Limpar campo de entrada
+            document.getElementById('client-email').value = "";
+        }
+        
+        function formatDate(dateStr) {
+            const [year, month, day] = dateStr.split('-');
+            return `${day}/${month}/${year}`;
+        }
+        
+        // Adicionar interatividade aos elementos de data/horário
+        document.querySelectorAll('.calendar-day.available').forEach(day => {
+            day.addEventListener('click', function() {
+                document.querySelectorAll('.calendar-day.selected').forEach(d => {
+                    d.classList.remove('selected');
+                });
+                this.classList.add('selected');
+                selectedDate = `2023-10-${this.textContent.padStart(2, '0')}`;
+            });
+        });
+        
+        document.querySelectorAll('.time-slot.available').forEach(slot => {
+            slot.addEventListener('click', function() {
+                document.querySelectorAll('.time-slot.selected').forEach(s => {
+                    s.classList.remove('selected');
+                });
+                this.classList.add('selected');
+                selectedTime = this.textContent;
+            });
+        });
+        
+        // Simular funcionalidade das abas
+        document.querySelectorAll('.tab-item').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.tab-item').forEach(t => {
+                    t.classList.remove('active');
+                });
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
